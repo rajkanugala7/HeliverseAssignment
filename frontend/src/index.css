@@ -1,0 +1,43 @@
+.home .bghome{
+   height: 100vh;
+   width: 100%;
+}
+.home .nav .navbar{
+  background-color: #928E85;
+  width: 100%;
+  height: 8vh;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 2px 4px   gray ;
+}
+
+.loginpage {
+  position: absolute;
+  bottom: 200px;
+  left: 450px;
+  padding: 40px; /* Space inside the border */
+  border-width: 50px; /* Border width */
+  /* Solid border */
+  border-image: url('../public/bglogin.jpg') ; /* Image as border */
+  border-radius: 30px; /* Apply rounded corners to the outer border */
+  height: 400px; /* Height of the login page */
+   /* Background color inside the border */
+  box-sizing: border-box; /* Include border in the element's dimensions */
+}
+
+.login {
+  /* Apply rounded corners to the inner content */
+  overflow: hidden; /* Ensure content fits within the rounded corners */
+   /* Background for the content area */
+}
+.navbar {
+  position: absolute;
+  top: 0px;
+  width: 100%; /* Full width */
+  height: 6vh; /* Set height relative to viewport */
+  background-image: url('../public/nav.jpg'); /* Path to your image */
+  background-position: 30% 30%; /* Align the image to the top center */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-clip: border-box; /* Clip the background to the border box */
+  background-size: cover; /* Ensure the image covers the entire navbar */
+  box-sizing: border-box; /* Include padding and border in width and height */
+}
