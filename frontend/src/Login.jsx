@@ -1,18 +1,49 @@
 import React, { useCallback, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [person, setPerson] = useState("principal");
+    const [role, setRole] = useState("");
+    const navigate = useNavigate();
 
-    const handleLogin = useCallback((e) => {
+    const handleLogin = useCallback(async (e) => {
         e.preventDefault();
-        console.log(email);
-        console.log(password);
-        console.log(person);
-    }, [email, password, person]); // Ensure to include dependencies if you use them
 
-    return (  
+        const payload = { email, password, role };
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/auth/login', payload);
+
+            if (response.status === 200) {
+                // Store token and role in localStorage
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('role', response.data.user.role);
+                console.log(response.data);
+                // Redirect based on role
+                switch (response.data.user.role) {
+                    case 'principal':
+                        navigate('/principal-dashboard');
+                        break;
+                    case 'teacher':
+                        navigate('/teacher-dashboard');
+                        break;
+                    case 'student':
+                        navigate('/student-dashboard');
+                        break;
+                    default:
+                        navigate('/login');
+                }
+            } else {
+                console.error('Login failed:', response.data.message);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error.response ? error.response.data : error.message);
+        }
+    }, [email, password, role, navigate]);
+
+    return (
         <div className="loginpage col-5">
             <div className="login border border-success p-4 rounded">
                 <form onSubmit={handleLogin}>
@@ -41,16 +72,16 @@ export default function Login() {
                         />
                     </div>
                     <div className="form-group mt-4">
-                        <label htmlFor="personSelect">Role</label>
+                        <label htmlFor="roleSelect">Role</label>
                         <select 
-                            className="form-control form-control-sm " 
-                            id="personSelect"
-                            onChange={(e) => setPerson(e.target.value)}
+                            className="form-control form-control-sm" 
+                            id="roleSelect"
+                            onChange={(e) => setRole(e.target.value)}
                         >
                             <option value="">Select role</option>
-                            <option value="Principal">Principal</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Student">Student</option>
+                            <option value="principal">Principal</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="student">Student</option>
                         </select>
                     </div>
                     <button type="submit" className="btn btn-primary mt-5">Login</button>

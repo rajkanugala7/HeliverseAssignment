@@ -1,7 +1,11 @@
+import Navbar from "./Navbar";
+
+
 export default function Dashboard() {
     return (
         <div>
-            <h1>dashboard</h1>
+              <Navbar/>
+              <img src="/bgHome.jpg" alt="" className="bghome" />
         </div>
     )
 }

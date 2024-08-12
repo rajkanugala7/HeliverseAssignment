@@ -22,7 +22,7 @@ exports.createStudent = async (req, res) => {
 
 exports.getAllStudents = async (req, res) => {
     try {
-      const students = await Student.find().populate('classroom');
+      const students = await Student.find({});
       res.status(200).json(students);
     } catch (error) {
       res.status(500).json({ message: 'Server Error', error });
@@ -34,7 +34,7 @@ exports.getAllStudents = async (req, res) => {
     const { id } = req.params;
   
     try {
-      const student = await Student.findById(id).populate('classroom');
+      const student = await Student.findById(id);
       if (!student) return res.status(404).json({ message: 'Student not found' });
   
       res.status(200).json(student);
