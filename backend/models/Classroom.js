@@ -5,7 +5,11 @@ const { Schema } = mongoose;
 const ClassroomSchema = new Schema({
   name: { type: String, required: true ,unique:true },
   students: [{ type: Schema.Types.ObjectId, ref: 'Student' }], // Array of student references
-  principal: { type: Schema.Types.ObjectId, ref: 'Principal', required: true } // Reference to Principal
+  principal: { type: Schema.Types.ObjectId, ref: 'Principal', required: true },
+  teacher: {type:Schema.Types.ObjectId,ref:'Teacher',required : true, unique: true}
+  
+  
+  // Reference to Principal
 });
 
 module.exports = mongoose.model('Classroom', ClassroomSchema);

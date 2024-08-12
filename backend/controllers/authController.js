@@ -142,3 +142,27 @@ exports.registerTeacher = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+
+exports.getTeachear = async (req, res) => {
+  try {
+      const { email } = req.query;
+      
+      if (!email) {
+          return res.status(400).json({ message: 'Email is required' });
+      }
+
+      const teacher = await Teacher.findOne({ email: email });
+
+      if (!teacher) {
+          return res.status(404).json({ message: 'teacher not found' });
+      }
+
+      res.json({ ...teacher._doc }); // Use _doc to get the raw document
+
+  } catch (error) {
+      console.error('Error fetching principal:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
+};
