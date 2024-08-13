@@ -26,7 +26,6 @@ app.use("/teacher",teacherRoutes)
 
 
 
-
 const uri=process.env.MONGO_URL;
 
 mongoose.connect(uri).then(() => {

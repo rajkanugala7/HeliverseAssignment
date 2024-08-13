@@ -21,13 +21,19 @@ exports.createStudent = async (req, res) => {
 };
 
 exports.getAllStudents = async (req, res) => {
-    try {
-      const students = await Student.find({});
-      res.status(200).json(students);
-    } catch (error) {
-      res.status(500).json({ message: 'Server Error', error });
+  try {
+    const { classroomId } = req.query; // Extract classroomId from query parameters
+    console.log(classroomId)
+    if (!classroomId) {
+      return res.status(400).json({ message: 'classroomId is required' });
     }
-  };
+
+    const students = await Student.find({ classroom: classroomId}); // Find students by classroomId
+    res.status(200).json(students);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error });
+  }
+};
 
 
   exports.getStudentById = async (req, res) => {
@@ -53,7 +59,7 @@ exports.getAllStudents = async (req, res) => {
         id,
         { email, name, rollNo, cgpa, classroom: classroomId },
         { new: true }
-      ).populate('classroom');
+      );
   
       if (!updatedStudent) return res.status(404).json({ message: 'Student not found' });
   
